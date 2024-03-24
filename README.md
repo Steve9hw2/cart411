@@ -1,0 +1,1 @@
+My project for this class is one I dub Choores - a parody of my time in retail work focused on the experience of managing a store and the customers within it as only one employee, dealing with mounting layers of pressure and work in the pursuit of the impossible expectations of detached shareholders.
