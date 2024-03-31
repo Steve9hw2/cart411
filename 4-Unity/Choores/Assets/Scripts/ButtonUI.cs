@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonUI : MonoBehaviour
 {
-    [SerializeField] private string mainGameScene = "Main";
+    [SerializeField] private string mainGameScene = "Intro";
     public void ExitGameButton()
     {
         Application.Quit();
