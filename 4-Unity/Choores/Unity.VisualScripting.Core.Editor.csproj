@@ -301,9 +301,9 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Canvases\AlignOperation.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\ResourceProviders\AssetBundleResourceProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\SerializedProperties\SerializedPropertyUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_3_1.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Dependencies\ReorderableList\ElementAdderMenu\ElementAdderMeta.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Utilities\NativeUtility.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_3_1.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Reflection\TypeOptionTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Platforms\FieldInfoStubWriter.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Plugin\Migrations\Migration_1_4_0_f5_to_1_4_0_f6.cs" />
@@ -810,11 +810,11 @@
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
       <HintPath>Library\PackageCache\com.unity.collections@1.2.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Plastic.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>

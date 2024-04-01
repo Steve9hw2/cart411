@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class EndSceneScript : MonoBehaviour
 {
     [SerializeField] private string menuScene = "Menu";
-
     private void Start()
     {
         GameObject endTextLabel = GameObject.Find("EndText");

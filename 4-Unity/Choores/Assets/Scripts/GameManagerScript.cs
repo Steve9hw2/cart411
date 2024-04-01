@@ -28,6 +28,8 @@ public class GameManagerScript : MonoBehaviour
     private bool guideBoverride;
     private bool bathroomInUse;
     private string bathroomUser;
+    private bool isMusicPlaying;
+    private bool dayEndMusicPlaying;
 
     // SPECIAL BUTTON
     public GameObject specialLabel;
@@ -114,7 +116,6 @@ public class GameManagerScript : MonoBehaviour
     private float surveyScoreAvg = 0;
     private int currentItems = 0;
     private int totalItems = 0;
-    private float dailyUPT = 0;
     private float dailyDPT = 0;
     private int surveyNPS9 = 0;
     private int surveyNPS10 = 0;
@@ -124,7 +125,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
-        dayLength = 300;
+        dayLength = 100;
         buttonVisibility();
         exitTalk();
     }
@@ -188,6 +189,23 @@ public class GameManagerScript : MonoBehaviour
         GameObject receiveLabel = GameObject.Find("Receive");
         TMP_Text receive = receiveLabel.GetComponent<TMP_Text>();
 
+        GameObject musicDay1Label = GameObject.Find("MusicDay1");
+        AudioSource musicDay1 = musicDay1Label.GetComponent<AudioSource>();
+        GameObject musicDay2Label = GameObject.Find("MusicDay2");
+        AudioSource musicDay2 = musicDay2Label.GetComponent<AudioSource>();
+        GameObject musicDay3Label = GameObject.Find("MusicDay3");
+        AudioSource musicDay3 = musicDay3Label.GetComponent<AudioSource>();
+        GameObject musicDay4Label = GameObject.Find("MusicDay4");
+        AudioSource musicDay4 = musicDay4Label.GetComponent<AudioSource>();
+        GameObject musicDay5Label = GameObject.Find("MusicDay5");
+        AudioSource musicDay5 = musicDay5Label.GetComponent<AudioSource>();
+        GameObject musicDay6Label = GameObject.Find("MusicDay6");
+        AudioSource musicDay6 = musicDay6Label.GetComponent<AudioSource>();
+        GameObject musicDay7Label = GameObject.Find("MusicDay7");
+        AudioSource musicDay7 = musicDay7Label.GetComponent<AudioSource>();
+        GameObject musicDayEndLabel = GameObject.Find("MusicDayEnd");
+        AudioSource musicDayEnd = musicDayEndLabel.GetComponent<AudioSource>();
+
         if (bathroomDirty)
         {
             warnToilet.enabled = true;
@@ -231,6 +249,90 @@ public class GameManagerScript : MonoBehaviour
 
         if (dayLength > 0)
         {
+            if (!isMusicPlaying)
+            {
+                switch (dayNumber)
+                {
+                    case 1:
+                        musicDay1.Play();
+                        musicDay2.Stop();
+                        musicDay3.Stop();
+                        musicDay4.Stop();
+                        musicDay5.Stop();
+                        musicDay6.Stop();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 2:
+                        musicDay1.Stop();
+                        musicDay2.Play();
+                        musicDay3.Stop();
+                        musicDay4.Stop();
+                        musicDay5.Stop();
+                        musicDay6.Stop();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 3:
+                        musicDay1.Stop();
+                        musicDay2.Stop();
+                        musicDay3.Play();
+                        musicDay4.Stop();
+                        musicDay5.Stop();
+                        musicDay6.Stop();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 4:
+                        musicDay1.Stop();
+                        musicDay2.Stop();
+                        musicDay3.Stop();
+                        musicDay4.Play();
+                        musicDay5.Stop();
+                        musicDay6.Stop();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 5:
+                        musicDay1.Stop();
+                        musicDay2.Stop();
+                        musicDay3.Stop();
+                        musicDay4.Stop();
+                        musicDay5.Play();
+                        musicDay6.Stop();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 6:
+                        musicDay1.Stop();
+                        musicDay2.Stop();
+                        musicDay3.Stop();
+                        musicDay4.Stop();
+                        musicDay5.Stop();
+                        musicDay6.Play();
+                        musicDay7.Stop();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                    case 7:
+                        musicDay1.Stop();
+                        musicDay2.Stop();
+                        musicDay3.Stop();
+                        musicDay4.Stop();
+                        musicDay5.Stop();
+                        musicDay6.Stop();
+                        musicDay7.Play();
+                        musicDayEnd.Stop();
+                        isMusicPlaying = true;
+                        break;
+                }
+            }
+            
             if (!talking)
             {
                 dayLength -= Time.deltaTime;
@@ -245,14 +347,16 @@ public class GameManagerScript : MonoBehaviour
                     customerBSpawned = true;
                     customerBLocation = 0;
                     generateCustomerB();
+                    setLocation();
                 }
                 if (!customerASpawned)
                         {
                             customerASpawned = true;
                             customerALocation = 0;
                             generateCustomerA();
-                        }      
-                newCustomerCheck = 10;
+                            setLocation();
+                }      
+                newCustomerCheck = 5;
             }
             if(busyworkEventCheck <= 0)
             {
@@ -260,7 +364,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     newStockArrived = true;
                 }
-                busyworkEventCheck = 60;
+                busyworkEventCheck = 20;
             }
         }
         if(dayLength <= 0)
@@ -270,6 +374,20 @@ public class GameManagerScript : MonoBehaviour
             resetCustomerA();
             resetCustomerB();
             dayEnded = true;
+            if (!dayEndMusicPlaying)
+            {
+                salesWTD += salesDaily;
+                isMusicPlaying = false;
+                dayEndMusicPlaying = true;
+                musicDay1.Stop();
+                musicDay2.Stop();
+                musicDay3.Stop();
+                musicDay4.Stop();
+                musicDay5.Stop();
+                musicDay6.Stop();
+                musicDay7.Stop();
+                musicDayEnd.Play();
+            }
         }
 
         GameObject eodStatsLabel = GameObject.Find("EODStats");
@@ -278,8 +396,6 @@ public class GameManagerScript : MonoBehaviour
         TMP_Text statsLabel = statsLabelLabel.GetComponent<TMP_Text>();
         GameObject dptLabelLabel = GameObject.Find("DPTLabel");
         TMP_Text dptLabel = dptLabelLabel.GetComponent<TMP_Text>();
-        GameObject uptLabelLabel = GameObject.Find("UPTLabel");
-        TMP_Text uptLabel = uptLabelLabel.GetComponent<TMP_Text>();
         GameObject notLabelLabel = GameObject.Find("NumOfTransactionsLabel");
         TMP_Text notLabel = notLabelLabel.GetComponent<TMP_Text>();
         GameObject salesLabelLabel = GameObject.Find("SalesLabel");
@@ -288,6 +404,8 @@ public class GameManagerScript : MonoBehaviour
         TMP_Text surveyResponseNo = surveyResponsesLabel.GetComponent<TMP_Text>();
         GameObject npsLabelLabel = GameObject.Find("NPSLabel");
         TMP_Text npsLabel = npsLabelLabel.GetComponent<TMP_Text>();
+        GameObject wtdLabelLabel = GameObject.Find("WTDLabel");
+        TMP_Text wtdLabel = wtdLabelLabel.GetComponent<TMP_Text>();
         GameObject continueButtonLabel = GameObject.Find("ContinueButton");
         Image continueButton = continueButtonLabel.GetComponent<Image>();
         GameObject continueTxtLabel = GameObject.Find("Continue");
@@ -312,11 +430,11 @@ public class GameManagerScript : MonoBehaviour
                 eodStats.enabled = false;
                 statsLabel.enabled = false;
                 dptLabel.enabled = false;
-                uptLabel.enabled = false;
                 notLabel.enabled = false;
                 salesLabel.enabled = false;
                 surveyResponseNo.enabled = false;
                 npsLabel.enabled = false;
+                wtdLabel.enabled = false;
                 continueButton.enabled = false;
                 continueTxt.enabled = false;
                 quitButton.enabled = false;
@@ -335,18 +453,12 @@ public class GameManagerScript : MonoBehaviour
                 if(numOfSales > 0)
                 {
                 dailyDPT = salesDaily / numOfSales;
+                dailyDPT = Mathf.Round(dailyDPT * 100.0f) * 0.01f;
                 }
-                dptLabel.text = "dollar per transaction: "+dailyDPT.ToString();
-
-                uptLabel.enabled = true;
-                if(numOfSales > 0)
-                {
-                dailyUPT = totalItems / numOfSales;
-                }
-                uptLabel.text = "units per transaction: "+dailyUPT.ToString();
+                dptLabel.text = "dpt: "+dailyDPT.ToString();
 
                 notLabel.enabled = true;
-                notLabel.text = "number of transactions: "+numOfSales.ToString();
+                notLabel.text = "transactions: "+numOfSales.ToString();
 
                 salesLabel.enabled = true;
                 salesLabel.text = "sales: " + salesDaily;
@@ -365,6 +477,9 @@ public class GameManagerScript : MonoBehaviour
 
                 npsLabel.enabled = true;
                 npsLabel.text = "net promoter score: " + netPromoterScore;
+
+                wtdLabel.enabled = true;
+                wtdLabel.text = "weekly sales: " + salesWTD;
 
                 continueButton.enabled = true;
                 continueTxt.enabled = true;
@@ -449,6 +564,8 @@ public class GameManagerScript : MonoBehaviour
         {
             guideToBtnA.enabled = false;
             guideA.enabled = false;
+            clarifyBtnA.enabled = false;
+            clarifyA.enabled = false;
             suggestBtnA.enabled = false;
             suggestA.enabled = false;
             converseBtnA.enabled = false;
@@ -461,6 +578,8 @@ public class GameManagerScript : MonoBehaviour
         {
             guideToBtnB.enabled = false;
             guideB.enabled = false;
+            clarifyBtnB.enabled = false;
+            clarifyB.enabled = false;
             suggestBtnB.enabled = false;
             suggestB.enabled = false;
             converseBtnB.enabled = false;
@@ -485,10 +604,10 @@ public class GameManagerScript : MonoBehaviour
             case 5: case 6:
                 wantIsA = "Shoes";
                 break;
-            case 7: case 8:
+            case 7: 
                 wantIsA = "Sales";
                 break;
-            case 9:
+            case 8: case 9:
                 wantIsA = "Bathroom";
                 break;
         }
@@ -523,9 +642,10 @@ public class GameManagerScript : MonoBehaviour
                 wantIsB = "Shoes";
                 break;
             case 7:
-            case 8:
+           
                 wantIsB = "Sales";
                 break;
+            case 8:
             case 9:
                 wantIsB = "Bathroom";
                 break;
@@ -1098,10 +1218,9 @@ public class GameManagerScript : MonoBehaviour
      if(customerApatience > 1 && customerAagreeability > 1)
         {
             salesDaily += customerAcart;
-            salesWTD += salesDaily;
+       //     salesWTD += salesDaily;
             numOfSales += 1;
             totalItems += currentItems;
-            dailyUPT = totalItems / numOfSales;
             customerAdialog = dEndSaleHappy[UnityEngine.Random.Range(0, dEndSaleHappy.Length)];
             customerAcheckedOut = true;
         }
@@ -1150,6 +1269,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToSuitsA()
     {
+        dayLength -= 5;
         customerALocation = 4;
         exitTalk();
         currentLocation = 4;
@@ -1158,14 +1278,18 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToPantsA()
     {
+        dayLength -= 5;
         customerALocation = 2;
         exitTalk();
         currentLocation = 2;
         setLocation();
+        specialLocation = "Changing";
+        setSpecial();
     }
 
     public void guideToShoesA()
     {
+        dayLength -= 5;
         customerALocation = 3;
         exitTalk();
         currentLocation = 3;
@@ -1174,6 +1298,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToSalesA()
     {
+        dayLength -= 5;
         customerALocation = 1;
         exitTalk();
         currentLocation = 1;
@@ -1186,6 +1311,7 @@ public class GameManagerScript : MonoBehaviour
         GameObject specialBtnLab = GameObject.Find("Special");
         Image specialButton = specialButtonLab.GetComponent<Image>();
         TMP_Text specialBtn = specialBtnLab.GetComponent<TMP_Text>();
+        dayLength -= 5;
         customerALocation = -6;
         exitTalk();
         currentLocation = 5;
@@ -1759,11 +1885,10 @@ public class GameManagerScript : MonoBehaviour
 
         if (customerBpatience > 1 && customerBagreeability > 1)
         {
-            salesDaily += customerAcart;
-            salesWTD += salesDaily;
+            salesDaily += customerBcart;
+        //    salesWTD += salesDaily;
             numOfSales += 1;
             totalItems += currentItems;
-            dailyUPT = totalItems / numOfSales;
             customerBdialog = dEndSaleHappy[UnityEngine.Random.Range(0, dEndSaleHappy.Length)];
             customerBcheckedOut = true;
         }
@@ -1812,6 +1937,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToSuitsB()
     {
+        dayLength -= 5;
         customerBLocation = 4;
         exitTalk();
         currentLocation = 4;
@@ -1820,14 +1946,18 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToPantsB()
     {
+        dayLength -= 5;
         customerBLocation = 2;
         exitTalk();
         currentLocation = 2;
         setLocation();
+        specialLocation = "Changing";
+        setSpecial();
     }
 
     public void guideToShoesB()
     {
+        dayLength -= 5;
         customerBLocation = 3;
         exitTalk();
         currentLocation = 3;
@@ -1836,6 +1966,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void guideToSalesB()
     {
+        dayLength -= 5;
         customerBLocation = 1;
         exitTalk();
         currentLocation = 1;
@@ -1848,6 +1979,7 @@ public class GameManagerScript : MonoBehaviour
         GameObject specialBtnLab = GameObject.Find("Special");
         Image specialButton = specialButtonLab.GetComponent<Image>();
         TMP_Text specialBtn = specialBtnLab.GetComponent<TMP_Text>();
+        dayLength -= 5;
         customerBLocation = -6;
         exitTalk();
         currentLocation = 5;
@@ -2585,18 +2717,19 @@ public class GameManagerScript : MonoBehaviour
         }
 
         dailyDPT = 0;
-        dailyUPT = 0;
-        salesWTD += salesDaily;
+        totalItems = 0;
         salesDaily = 0;
         numOfSales = 0;
         currentLocation = 0;
         dayEnded = false;
-        dayLength = 300;
-        newCustomerCheck = 10;
-        busyworkEventCheck = 60;
+        dayLength = 100;
+        newCustomerCheck = 5;
+        busyworkEventCheck = 20;
         setLocation();
         dayNumber++;
         dayText.text = "DAY " + dayNumber;
         specialLab.text = "Office";
+        isMusicPlaying = false;
+        dayEndMusicPlaying = false;
     }
 }

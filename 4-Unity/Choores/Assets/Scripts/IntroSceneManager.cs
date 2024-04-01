@@ -11,6 +11,9 @@ public class IntroSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject musicLabel = GameObject.Find("Music");
+        AudioSource music = musicLabel.GetComponent<AudioSource>();
+
         GameObject introTextLabel = GameObject.Find("IntroText");
         TMP_Text introText = introTextLabel.GetComponent<TMP_Text>();
         GameObject speakerNameLabel = GameObject.Find("NameText");
@@ -41,6 +44,7 @@ public class IntroSceneManager : MonoBehaviour
         yajobImg5.enabled = false;
         yajobImg6.enabled = false;
         blackout.enabled = true;
+
     }
 
 
